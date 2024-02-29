@@ -34,7 +34,7 @@ const Login = () => {
             <button className="signup-button">Login</button>
             {err && <span>error</span>}
         </form>
-        <p className="have-account">Don't have an account? <Link to="/register">Register</Link></p>
+        <p className="have-account">Don't have an account? <Link className="link-style" to="/register">Register</Link></p>
     </div>
 </div>
   )

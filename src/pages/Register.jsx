@@ -69,7 +69,7 @@ function Register() {
                 <button className="signup-button">Sign Up</button>
                 {error && <span>{error}</span>}
             </form>
-            <p className="have-account">Already have an account? <Link to="/login">login</Link></p>
+            <p className="have-account">Already have an account? <Link className="link-style" to="/login">login</Link></p>
         </div>
     </div>
   )

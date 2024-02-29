@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
+
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
@@ -24,6 +25,11 @@ const Search = () => {
       collection(db, "users"),
       where("displayName", "==", username)
     );
+
+    const handleSelect = async () =>{
+        //check if group exists, if not create a new one
+        const res = await getDocs(db, "chats", )
+    }
 
     try {
       const querySnapshot = await getDocs(q);
@@ -45,7 +51,7 @@ const Search = () => {
         <input type="text" placeholder="Find a user" onKeyDown={handleKey} onChange={e => setUsername(e.target.value)}/>
       </div>
       {err && <span>user not found</span>}
-      {user && <div className="userChat">
+      {user && <div className="userChat" onClick={handleSelect}>
         <img src={user.photoURL} alt="" className="userChat"/>
         <div className="userChatInfo">
           <span>{user.displayName}</span>
