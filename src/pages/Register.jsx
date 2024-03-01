@@ -22,6 +22,10 @@ function Register() {
     const password = event.target[2].value;
     const file = event.target[3].files[0]; 
 
+    if(!file){
+      return alert('please enter a photo')
+    }
+
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const storageRef = ref(storage, displayName);

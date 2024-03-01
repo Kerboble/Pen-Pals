@@ -1,15 +1,18 @@
-import React from 'react'
-import phil from "../assets/user(1).png"
+import React, { useContext } from 'react'
 import online from "../assets/full-stop.png"
 import Messages from './Messages'
 import Input from './Input'
+import { ChatContext } from '../context/ChatContext'
+
 function Chat() {
+  const { data } = useContext(ChatContext);
+
   return (
     <div className="chat">
         <div className="chatInfo">
-        <img src={phil} alt="" className="userChat"/>
+        <img src={data.user.photoURL} alt="" className="userChat"/>
           <div className="userStatus">
-            <span>Phil</span>
+            <span>{data.user?.displayName}</span>
             <span className='onlineStatus'>Online <img className='online-icon' src={online}/></span>
           </div>
         </div>

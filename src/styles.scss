@@ -40,6 +40,10 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #848871;
+    @include tablet{
+      display: flex;
+      justify-content: center;
+    }
 }
 
 .form-wrapper {
@@ -113,6 +117,9 @@ form {
 .login-photo {
   width: 50%;
   height: 100vh;
+  @include tablet{
+    display: none;
+  }
 }
 
 .logo {
@@ -216,7 +223,6 @@ label {
           width: 50px;
           height: 50px;
           border-radius: 50%;
-          background-color: #262b15;
           object-fit: cover;
           }
 
@@ -317,12 +323,12 @@ label {
       }
 
       .userChat{
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
-        background-color: #262b15;
         object-fit: cover;
         margin-left: 10px;
+        padding: 6px;
       }
 
       span{
@@ -369,7 +375,7 @@ label {
             gap: 10px;
 
             p{
-              background-color: white;
+              background-color: #AFB4AD;
               padding: 10px 20px;
               border-radius: 0px 10px 10px 10px;
               min-width: max-content;
