@@ -12,7 +12,6 @@ import { db, storage } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Attach from "../assets/paper-clip.png"
-import upload from "../assets/gallery.png"
 
 function Input() {
   const [text, setText] = useState("");

@@ -20,10 +20,15 @@ function Register() {
     const displayName = event.target[0].value;
     const email = event.target[1].value;
     const password = event.target[2].value;
-    const file = event.target[3].files[0]; 
+    const confirmPassword = event.target[3].value
+    const file = event.target[4].files[0]; 
 
     if(!file){
       return alert('please enter a photo')
+    }
+
+    if(password !== confirmPassword){
+      return alert('please enter matching passwords')
     }
 
     try {
@@ -66,6 +71,7 @@ function Register() {
                 <input className="input-form" type="text" placeholder="username"/>
                 <input className="input-form" type="email" placeholder="email"/>
                 <input className="input-form" type="password" placeholder="password"/>
+                <input className="input-form" type="password" placeholder="confirm password"/>
                 <input className="input-form" style={{display:"none"}} type="file" id="file"/>
                 <label htmlFor="file">
                     <img src={upload} alt="upload-icon" className="avatar-upload-icon"/><span className="add-picture">Add profile picture</span>
