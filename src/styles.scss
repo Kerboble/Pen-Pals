@@ -5,7 +5,7 @@
 }
 
 @mixin tablet {
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 963px){
     @content;
   }
 }
@@ -53,6 +53,8 @@ body {
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 form {
@@ -115,8 +117,10 @@ form {
 }
 
 .login-photo {
-  width: 50%;
+  max-width: none;
+  min-width: 600px;
   height: 100vh;
+
   @include tablet{
     display: none;
   }
@@ -263,15 +267,34 @@ label {
           }
 
           button {
-            background-color: #464b37;
-            border: none;
+            outline: 0;
+            grid-gap: 8px;
+            align-items: center;
+            background: 0 0;
+            border: 1px solid #848871;
+            border-radius: 4px;
             cursor: pointer;
-            border-radius: 5px;
-            height: 25px;
-            @include tablet{
-              position: absolute;
-              bottom: 10px;
-              background-color: #262b15;
+            display: inline-flex;
+            flex-shrink: 0;
+            font-size: 14px;
+            gap: 8px;
+            justify-content: center;
+            line-height: 1.5;
+            overflow: hidden;
+            padding: 6px 8px;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            transition: all .14s ease-out;
+            white-space: nowrap;
+            width: 100px;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: #262b15;
+            color: white;
+            &:hover{
+              box-shadow: 4px 4px 0 #AFB4AD;
+              transform: translate(-4px,-4px);
             }
           }
         }
