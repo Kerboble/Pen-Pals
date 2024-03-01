@@ -21,7 +21,8 @@
   color: #262b15;
 
   &:hover{
-    font-weight: bold;
+    text-decoration: underline;
+    transition: 0.2s;
   }
 }
 
