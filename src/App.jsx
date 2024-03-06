@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"
 import { AuthContext } from "./context/AuthContext";
-
+import Errorpage from "./pages/Errorpage";
 
 function App() {
 
@@ -26,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<ProtectedRoute><Home /></ProtectedRoute>}/>
+          <Route path='error' element={<Errorpage />} />
           <Route path="login" element={<Login />}/>
           <Route path="register" element={<Register />}/>
         </Route>
