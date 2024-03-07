@@ -26,9 +26,9 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<ProtectedRoute><Home /></ProtectedRoute>}/>
-          <Route path='error' element={<Errorpage />} />
           <Route path="login" element={<Login />}/>
           <Route path="register" element={<Register />}/>
+          <Route path="*" element={<Errorpage />}/>
         </Route>
       </Routes>
     </BrowserRouter>
