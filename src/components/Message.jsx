@@ -31,7 +31,7 @@ useEffect(() => {
         <span>{message.date.toDate().toLocaleTimeString()}</span>
       </div>
       <div className="messageContent">
-        <p>{message.text}</p>
+        {message.text !== "" ? <p>{message.text}</p> : null}
         {message.img && <img src={message.img} alt="" />}
       </div>
     </div>
