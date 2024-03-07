@@ -436,7 +436,7 @@ label {
       }
 
       .chat-input {
-        height: 40px;
+        max-height: 50px;
         background-color: white;
         padding: 10px;
         display: flex;
@@ -453,6 +453,36 @@ label {
           width: 24px;
           cursor: pointer;
         }
+
+        .sending-photo-container {
+          position: relative;
+          height: 50px;
+          width: 100px;
+
+          .sending-image {
+            height: 50px;
+            width: 100px;
+            border-radius: 10px;
+
+            &:hover{
+              .delete-sending-photo{
+                background-color: #262b15;
+              }
+            }
+          }
+          .delete-sending-photo{
+            position: absolute;
+            right: 0px;
+            height: 20px;
+            width: 20px;
+            background-color: #AFB4AD;
+            border-radius: 50%;
+            color: #262b15;
+            text-align: center;
+            color: white;
+          }
+        }
+       
         
         button {
           height: 30px;

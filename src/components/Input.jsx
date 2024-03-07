@@ -16,6 +16,7 @@ import Attach from "../assets/paper-clip.png"
 function Input() {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
+  
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
@@ -65,11 +66,29 @@ function Input() {
     setImg(null);
   }
 
+  const  handleFile = (e) => {
+    console.log(e.target.files)
+    const img = e.target.files[0]
+    setImg(img)
+  }
+
+  const deleteSendingPhoto = () =>{
+    setImg(null)
+  }
+
   return (
     <div className="chat-input">
+      {img ? 
+      <div className="sending-photo-container">
+        <img src={URL.createObjectURL(img)} alt="" className="sending-image" /> 
+        <button onClick={deleteSendingPhoto} className="delete-sending-photo">x</button>
+      </div>
+      
+      : 
+      null}
     <input
       type="text"
-      placeholder="Type something..."
+      placeholder="type a message...."
       onChange={(e) => setText(e.target.value)}
       value={text}
     />
@@ -78,10 +97,11 @@ function Input() {
         type="file"
         style={{ display: "none" }}
         id="file"
-        onChange={(e) => setImg(e.target.files[0])}
+        onChange={handleFile}
+        placeholder="hello"
       />
       <label htmlFor="file">
-        <img src={Attach} alt="" />
+        <img src={Attach} alt=""/>
       </label>
       <button onClick={handleSend}>Send</button>
     </div>
