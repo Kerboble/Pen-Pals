@@ -463,12 +463,6 @@ label {
             height: 50px;
             width: 100px;
             border-radius: 10px;
-
-            &:hover{
-              .delete-sending-photo{
-                background-color: #262b15;
-              }
-            }
           }
           .delete-sending-photo{
             position: absolute;
@@ -480,6 +474,14 @@ label {
             color: #262b15;
             text-align: center;
             color: white;
+            transition: 0.5ms;
+            font-weight: bold;
+            vertical-align: middle;
+
+            &:hover{
+              height: 21px;
+              width: 21px;
+            }
           }
         }
        
