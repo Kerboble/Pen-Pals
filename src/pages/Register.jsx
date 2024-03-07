@@ -13,6 +13,7 @@ import { useNavigate, Link } from 'react-router-dom';
 function Register() {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const[fileName, setFileName] = useState(null)
 
   const handleSubmit = async (event) => {
     console.log('started')
@@ -60,6 +61,10 @@ function Register() {
     console.log('worked')
   };
 
+  const  displayFileName = (e) => {
+    const name = e.target.files[0].name
+    setFileName(name)
+  }
 
   return (
     <div className="form-container">
@@ -72,9 +77,9 @@ function Register() {
                 <input className="input-form" type="email" placeholder="email"/>
                 <input className="input-form" type="password" placeholder="password"/>
                 <input className="input-form" type="password" placeholder="confirm password"/>
-                <input className="input-form" style={{display:"none"}} type="file" id="file"/>
+                <input className="input-form" style={{display:"none"}} type="file" id="file" onChange={displayFileName}/>
                 <label htmlFor="file">
-                    <img src={upload} alt="upload-icon" className="avatar-upload-icon"/><span className="add-picture">Add profile picture</span>
+                    <img src={upload} alt="upload-icon" className="avatar-upload-icon"/><span className="add-picture">{fileName ? fileName : "select a user photo"}</span>
                 </label>
                 <button className="signup-button">Sign Up</button>
                 {error && <span>{error}</span>}

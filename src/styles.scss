@@ -400,12 +400,12 @@ label {
             flex-direction: column;
             gap: 10px;
             align-items: flex-start;
-
             p{
               background-color: #AFB4AD;
               padding: 10px 20px;
               border-radius: 0px 10px 10px 10px;
-              min-width: max-content;
+              max-width: 50%;
+              overflow-wrap: break-word;
             }
 
             img{
@@ -427,6 +427,8 @@ label {
                 padding: 10px 20px;
                 border-radius: 10px 10px 0px 10px;
                 color: white;
+                max-width: 50%;
+                overflow-wrap: break-word;
               }
             }
           }
