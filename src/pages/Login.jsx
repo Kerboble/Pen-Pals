@@ -39,7 +39,7 @@ const Login = () => {
           <input className="input-form " type="email" placeholder="email" />
           <input className="input-form " type="password" placeholder="password" />
           <button className="signup-button" type="submit">
-            {loading ? <CircleLoader color={"#123abc"} loading={loading} /> : "Login"}
+            {loading ? <CircleLoader color={"#262b15"} loading={loading} /> : "Login"}
           </button>
           {err && <span>error</span>}
         </form>

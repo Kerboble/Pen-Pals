@@ -77,7 +77,7 @@ function Register() {
             <img src={upload} alt="upload-icon" className="avatar-upload-icon" /><span className="add-picture">Add profile picture</span>
           </label>
           <button className="signup-button" type="submit">
-            {loading ? <BeatLoader color={"#123abc"} loading={loading} /> : "Sign Up"}
+            {loading ? <BeatLoader color={"#262b15"} loading={loading} /> : "Sign Up"}
           </button>
           {error && <span>{error}</span>}
         </form>

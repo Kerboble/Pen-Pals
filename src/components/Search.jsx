@@ -95,7 +95,7 @@ const Search = () => {
         />
         {/* <button onClick={handleSearch}>Search</button> */}
       </div>
-      {loading && <BeatLoader color={"#123abc"} loading={loading} />}
+      {loading && <BeatLoader color={"#262b15"} loading={loading} />}
       {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
