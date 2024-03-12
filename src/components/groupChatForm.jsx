@@ -79,18 +79,20 @@ export const GroupChatForm = ({ onClose }) => {
             await setDoc(doc(db, 'groupChats', groupChatId), {messages: []});
 
             console.log(addedUserObjects);
-            const updates = addedUserObjects.forEach(user => {
-                const userGroupRef = doc(db, 'userGroups', user.uid);
-                return setDoc(userGroupRef,  {
-                    [`${groupChatId}.groupInfo`]: {
-                        // members: addedUserObjects.map((u) => ({ uid: u.uid, displayName: u.displayName, photoURL: u.photoURL})),
-                        groupId: groupChatId,
-                        groupName: chatName,
-                        photoURL: groupPhotoURL
-                    },
-                    [`${groupChatId}.date`]: serverTimestamp(),
-                });
-            });
+            const updates = addedUserObjects.map(user => {
+              const userGroupRef = doc(db, 'userGroups', user.uid);
+              return setDoc(userGroupRef,  {
+                  [`${groupChatId}.groupInfo`]: {
+                      groupId: groupChatId,
+                      groupName: chatName,
+                      photoURL: groupPhotoURL
+                  },
+                  [`${groupChatId}.date`]: serverTimestamp(),
+              });
+          });
+          
+          await Promise.all(updates);
+          
             console.log(updates)
 
             await Promise.all(updates);
