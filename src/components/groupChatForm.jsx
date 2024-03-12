@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase'
 import { AuthContext } from '../context/AuthContext';
+import upload from "../assets/gallery.png"
 
 export const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -32,7 +33,8 @@ export const GroupChatForm = ({ onClose }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [addedUsers, setAddedUsers] = useState([]);
   const [addedUserObjects, setAddedUserObjects] = useState([]);
-
+  const [groupPhotoURL, setGroupPhotoURL] = useState([]);
+  const[fileName, setFileName] = useState(null)
   const { currentUser } = useContext(AuthContext);
 
 
@@ -65,21 +67,26 @@ export const GroupChatForm = ({ onClose }) => {
 
     const allChatUsers = [currentUser];
     allChatUsers.push(addedUserObjects);
-    console.log(allChatUsers)
+    console.log(allChatUsers);
 
     
 
     try {
-        const res = await getDoc(doc(db, 'chats', groupChatId));
+        const res = await getDoc(doc(db, 'groupChats', groupChatId));
         console.log(res.data)
         if (!res.exists()) {
-            await setDoc(doc(db, 'chats', groupChatId), {messages: []});
+          // create a chat in group chats collection
+            await setDoc(doc(db, 'groupChats', groupChatId), {messages: []});
 
+            console.log(addedUserObjects);
             const updates = addedUserObjects.forEach(user => {
                 const userGroupRef = doc(db, 'userGroups', user.uid);
                 return setDoc(userGroupRef,  {
                     [`${groupChatId}.groupInfo`]: {
-                        members: addedUserObjects.map((u) => ({ uid: u.uid, displayName: u.displayName, photoURL: u.photoURL})),
+                        // members: addedUserObjects.map((u) => ({ uid: u.uid, displayName: u.displayName, photoURL: u.photoURL})),
+                        groupId: groupChatId,
+                        groupName: chatName,
+                        photoURL: groupPhotoURL
                     },
                     [`${groupChatId}.date`]: serverTimestamp(),
                 });
@@ -115,6 +122,13 @@ export const GroupChatForm = ({ onClose }) => {
     setAddedUsers(addedUsers.filter(u => u !== user));
   };
 
+  const  displayFileName = (e) => {
+    const name = e.target.files[0].name
+    const photoURL = e.target.files[0]
+    setFileName(name)
+    setGroupPhotoURL(photoURL)
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -126,6 +140,12 @@ export const GroupChatForm = ({ onClose }) => {
         />
       </label>
 
+      <input className="input-form" style={{display:"none"}} type="file" id="file" onChange={displayFileName}/>
+      <label htmlFor="file">
+        <img src={upload} alt="upload-icon" className="avatar-upload-icon"/><span className="add-picture">{fileName ? fileName : "select a user photo"}</span>
+      </label>
+
+
       <div className='user-selection'>
         <div className="all-users">
             <h4>All Users</h4>
@@ -136,6 +156,7 @@ export const GroupChatForm = ({ onClose }) => {
                 }>{user.displayName}</div>
             ))}
         </div>
+
 
         <div className="addedUsers">
             <h4>Added Users</h4>

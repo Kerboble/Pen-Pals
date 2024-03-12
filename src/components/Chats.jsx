@@ -73,9 +73,9 @@ function Groups() {
 
   useEffect(() => {
     const getChats = () => {
-    const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+    const unsub = onSnapshot(doc(db, "userGroups", currentUser.uid), (doc) => {
       setChats(doc.data());
-
+      console.log(doc.data())
     });
 
     return () => {
@@ -90,8 +90,10 @@ function Groups() {
   }
 
   console.log(Object.entries(chats))
-Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
-console.log(chat[1].userInfo)))
+  const test = Object.entries(chats)[1]
+  console.log(test)
+// Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
+// console.log(Object.entries(chats)[1])))
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
