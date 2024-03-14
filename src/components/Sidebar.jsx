@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './Navbar'
 import Search from "./Search"
 import Chats from './Chats'
@@ -14,3 +14,15 @@ function Sidebar() {
 }
 
 export default Sidebar
+
+
+function NewSidebar() {
+  return (
+    <div className="sidebar">
+      <Chats />   {/* This will refer to both individual messages and group messages */}
+    </div>
+  )
+}
+
+
+

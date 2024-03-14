@@ -13,6 +13,7 @@ function Register() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const[fileName, setFileName] = useState(null)
 
   const handleSubmit = async (event) => {
     event.preventDefault();

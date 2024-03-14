@@ -5,7 +5,7 @@
 }
 
 @mixin tablet {
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 963px){
     @content;
   }
 }
@@ -15,6 +15,9 @@
     @content
   }
 }
+
+
+
 
 .link-style {
   text-decoration: none;
@@ -53,6 +56,8 @@ body {
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 form {
@@ -103,7 +108,7 @@ form {
     margin-top: 20px;
   }
 
-  .signup-button:hover {
+  .signup-button:hover, .error-link:hover {
     box-shadow: 4px 4px 0 #262b15;
     transform: translate(-4px,-4px);
   }
@@ -115,8 +120,10 @@ form {
 }
 
 .login-photo {
-  width: 50%;
+  max-width: none;
+  min-width: 600px;
   height: 100vh;
+
   @include tablet{
     display: none;
   }
@@ -162,7 +169,6 @@ label {
 }
 
 
-/*Home css*/
 
 .home {
     background-color: #848871;
@@ -263,15 +269,34 @@ label {
           }
 
           button {
-            background-color: #464b37;
-            border: none;
+            outline: 0;
+            grid-gap: 8px;
+            align-items: center;
+            background: 0 0;
+            border: 1px solid #848871;
+            border-radius: 4px;
             cursor: pointer;
-            border-radius: 5px;
-            height: 25px;
-            @include tablet{
-              position: absolute;
-              bottom: 10px;
-              background-color: #262b15;
+            display: inline-flex;
+            flex-shrink: 0;
+            font-size: 14px;
+            gap: 8px;
+            justify-content: center;
+            line-height: 1.5;
+            overflow: hidden;
+            padding: 6px 8px;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            transition: all .14s ease-out;
+            white-space: nowrap;
+            width: 100px;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: #262b15;
+            color: white;
+            &:hover{
+              box-shadow: 4px 4px 0 #AFB4AD;
+              transform: translate(-4px,-4px);
             }
           }
         }
@@ -350,6 +375,7 @@ label {
             font-weight: bold;
             font-size: 12px;
             color: #848871;
+            min-width: max-content;
           }
 
           .messageInfo{
@@ -373,12 +399,13 @@ label {
             display: flex;
             flex-direction: column;
             gap: 10px;
-
+            align-items: flex-start;
             p{
               background-color: #AFB4AD;
               padding: 10px 20px;
               border-radius: 0px 10px 10px 10px;
-              min-width: max-content;
+              max-width: 50%;
+              overflow-wrap: break-word;
             }
 
             img{
@@ -400,6 +427,8 @@ label {
                 padding: 10px 20px;
                 border-radius: 10px 10px 0px 10px;
                 color: white;
+                max-width: 50%;
+                overflow-wrap: break-word;
               }
             }
           }
@@ -407,7 +436,7 @@ label {
       }
 
       .chat-input {
-        height: 40px;
+        max-height: 50px;
         background-color: white;
         padding: 10px;
         display: flex;
@@ -424,6 +453,38 @@ label {
           width: 24px;
           cursor: pointer;
         }
+
+        .sending-photo-container {
+          position: relative;
+          height: 50px;
+          width: 100px;
+
+          .sending-image {
+            height: 50px;
+            width: 100px;
+            border-radius: 10px;
+          }
+          .delete-sending-photo{
+            position: absolute;
+            right: 0px;
+            height: 20px;
+            width: 20px;
+            background-color: #AFB4AD;
+            border-radius: 50%;
+            color: #262b15;
+            text-align: center;
+            color: white;
+            transition: 0.5ms;
+            font-weight: bold;
+            vertical-align: middle;
+
+            &:hover{
+              height: 21px;
+              width: 21px;
+            }
+          }
+        }
+       
         
         button {
           height: 30px;
@@ -448,4 +509,114 @@ label {
       }
     }
   }
+}
+
+/*error page*/
+
+@keyframes bounce {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-20px);
+  }
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #848871;
+  color: #262b15;
+  h1 {
+    padding: 0;
+    margin: 0;
+  }
+  h3 {
+    padding: 0;
+    margin: 0;
+  }
+  span {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.error-wrapper{
+  height: 80vh;
+  min-width: 80%;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  gap: 10px;
+
+  img{
+    height: 20vh;
+    animation:
+    bounce 700ms
+    alternate infinite
+    cubic-bezier(.2, .65, .6, 1);
+  }
+
+  .error-link{
+    outline: 0;
+    grid-gap: 8px;
+    align-items: center;
+    background: 0 0;
+    border: 1px solid #262b15;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0;
+    font-size: 16px;
+    gap: 8px;
+    justify-content: center;
+    line-height: 1.5;
+    overflow: hidden;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: all .14s ease-out;
+    white-space: nowrap;
+    width: 100px;
+    color: #262b15;
+
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.close-button {
+  float: right;
+  border: none;
+  background: none;
+  font-size: large;
+}
+
+.user-selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

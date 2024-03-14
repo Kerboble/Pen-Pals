@@ -5,7 +5,8 @@ export const ChatContext = createContext();
 export const ChatContextProvider  = ({ children }) => {
   const INITIAL_STATE = {
     chatId: "null",
-    user:{}
+    user:{},
+    isGroupChat: false
   };
 
   const chatReducer = (state, action) => {
@@ -14,12 +15,20 @@ export const ChatContextProvider  = ({ children }) => {
     switch(action.type){
         case "CHANGE_USER":
             return {
-                user:action.payload,
-                chatId: 
-                currentUser.uid > action.payload.uid
-                ? currentUser.uid + action.payload.uid
-                : action.payload.uid + currentUser.uid
+              ...state,
+                user: action.payload,
+                chatId: currentUser.uid > action.payload.uid
+                        ? currentUser.uid + action.payload.uid
+                        : action.payload.uid + currentUser.uid,
+                isGroupChat: false
             };
+        case 'CHANGE_GROUP':
+          return {
+            ...state,
+            chatId: action.payload.groupId,
+            isGroupChat: true,
+            groupInfo: action.payload
+          }
     }
 };
 

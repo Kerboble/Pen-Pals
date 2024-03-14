@@ -6,14 +6,18 @@ import { ChatContext } from '../context/ChatContext'
 
 function Chat() {
   const { data } = useContext(ChatContext);
+  const chatTitle = data.isGroupChat ? data.groupInfo.groupName : data.user.displayName;
+  const chatImage = data.isGroupChat ? data.groupInfo.photoURL : data.user.photoURL;
 
   return (
     <div className="chat">
         <div className="chatInfo">
-        <img src={data.user.photoURL} alt="" className="userChat"/>
+        <img src={chatImage} alt="" className="userChat"/>
           <div className="userStatus">
-            <span>{data.user?.displayName}</span>
-            <span className='onlineStatus'>Online <img className='online-icon' src={online}/></span>
+            <span>{chatTitle}</span>
+            {!data.isGroupChat && (
+              <span className='onlineStatus'>Online <img className='online-icon' src={online}/></span>
+            )}
           </div>
         </div>
         <hr />
