@@ -11,9 +11,10 @@ import {
     where,
     query
 } from 'firebase/firestore';
-import { db } from '../firebase'
+import { db, storage } from '../firebase'
 import { AuthContext } from '../context/AuthContext';
 import upload from "../assets/gallery.png"
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -63,20 +64,32 @@ export const GroupChatForm = ({ onClose }) => {
       return;
     }
 
-    console.log(addedUsers)
-    const groupChatId = [currentUser.uid, ...addedUserObjects.map((u) => u.uid)].sort().join('_');
-    console.log(groupChatId)
+    let photoURL = null
+    if (groupPhotoURL) {
+      const storageRef = ref(storage, `groupPhots/${groupPhotoURL.name}`);
+      try {
+        const snapshot = await uploadBytes(storageRef, groupPhotoURL);
+        photoURL = await getDownloadURL(snapshot.ref);
+
+      } catch (err) {
+        console.error('Error uploading file: ', err);
+        return;
+      }
+    }
 
     const allChatUsers = allUsers.filter(user => user.displayName === currentUser.displayName);
-
-
     addedUserObjects.forEach(user => {
       allChatUsers.push(user);
     })
 
     console.log(allChatUsers);
 
-    
+    console.log(addedUsers)
+    const groupChatId = [currentUser.uid, ...addedUserObjects.map((u) => u.uid)].sort().join('_');
+    const userIds = [currentUser.uid, ...addedUserObjects.map((u) => u.uid)].sort();
+    console.log(groupChatId)
+
+
 
     try {
         const res = await getDoc(doc(db, 'groupChats', groupChatId));
@@ -85,21 +98,20 @@ export const GroupChatForm = ({ onClose }) => {
           // create a chat in group chats collection
             await setDoc(doc(db, 'groupChats', groupChatId), {messages: []});
 
-            const updates = allChatUsers.forEach(user => {
+            
+            allChatUsers.forEach(user => {
               console.log(user)
-                const userGroupRef = doc(db, 'userGroups', user.uid);
-                return setDoc(userGroupRef,  {
-                    [groupChatId.groupInfo]: {
-                        // members: addedUserObjects.map((u) => ({ uid: u.uid, displayName: u.displayName, photoURL: u.photoURL})),
-                        groupId: groupChatId,
-                        groupName: chatName,
-                        photoURL: groupPhotoURL,
-                        users: addedUsers
-                    },
-                    [groupChatId.date]: serverTimestamp(),
-                });
+              updateDoc(doc(db, 'userGroups', user.uid),  {
+                [groupChatId + '.groupInfo']: {
+                  // members: addedUserObjects.map((u) => ({ uid: u.uid, displayName: u.displayName, photoURL: u.photoURL})),
+                  groupId: groupChatId,
+                  groupName: chatName,
+                  photoURL: photoURL,
+                  users: userIds
+                },
+                [groupChatId + '.date']: serverTimestamp(),
+              });
             });
-            await Promise.all(updates);
             }
         } catch (error) {
       console.error("Error creating group chat: ", error);

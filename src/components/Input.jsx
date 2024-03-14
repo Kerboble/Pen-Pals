@@ -22,45 +22,58 @@ function Input() {
   const { data } = useContext(ChatContext);
 
   const handleSend = async () => {
+    const messageData = {
+      id: uuid(),
+      text,
+      senderId: currentUser.uid,
+      date: Timestamp.now(),
+    };
+
     if (img) {
       const storageRef = ref(storage, uuid());
+      const uploadTask = uploadBytesResumable(storageRef, img);
 
-      await uploadBytesResumable(storageRef, img).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          await updateDoc(doc(db, "chats", data.chatId), {
-            messages: arrayUnion({
-              id: uuid(),
-              text,
-              senderId: currentUser.uid,
-              date: Timestamp.now(),
-              img: downloadURL,
-            }),
-          });
-        });
-      })              
+      uploadTask.on(
+        'state_changed',
+        null,
+        (err) => console.error(err),
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          messageData.img = downloadURL;
+          await sendMessage(messageData);
+        }
+      );
     } else {
-      await updateDoc(doc(db, "chats", data.chatId), {
-        messages: arrayUnion({
-          id: uuid(),
-          text,
-          senderId: currentUser.uid,
-          date: Timestamp.now(),
-        }),
-      });
+      await sendMessage(messageData)
     }
+  };
 
-    await updateDoc(doc(db, "userChats", currentUser.uid), {
-      [data.chatId + ".lastMessage"] : {
-        text
-      },
-      [data.chatId+".date"]: serverTimestamp(),
+  const sendMessage = async (messageData) => {
+    const chatCollection = data.isGroupChat ? 'groupChats' : 'chats';
+    await updateDoc(doc(db, chatCollection, data.chatId), {
+      messages: arrayUnion(messageData),
     });
-    await updateDoc(doc(db, "userChats", data.user.uid), {
-      [data.chatId + ".lastMessage"] : {
-        text
-      },
-      [data.chatId+".date"]: serverTimestamp(),
-    });
+
+    if(!data.isGroupChat) {
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        [data.chatId + ".lastMessage"] : { text },
+        [data.chatId+".date"]: serverTimestamp(),
+      });
+      await updateDoc(doc(db, "userChats", data.user.uid), {
+        [data.chatId + ".lastMessage"] : { text },
+        [data.chatId+".date"]: serverTimestamp(),
+      });
+    } else {
+      const users = data.groupInfo.users;
+
+      console.log(users);
+      users.forEach((user) => 
+      updateDoc(doc(db, "userGroups", user), {
+        [data.chatId + ".lastMessage"] : { text },
+        [data.chatId+".date"]: serverTimestamp(),
+      })
+      );
+    }
 
     setText('');
     setImg(null);
