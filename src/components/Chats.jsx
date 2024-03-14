@@ -176,6 +176,31 @@ function Notes() {
   const { dispatch } =  useContext(ChatContext)
 
 
+  const createNote = async () => {
+      //check whether the group(chats in firestore) exists, if not create
+      try {
+        const res = await getDoc(doc(db, "chats", currentUser.uid));
+  
+        if (!res.exists()) {
+          //create a chat in chats collection
+          await setDoc(doc(db, "chats", currentUser.uid), { messages: [] });
+  
+          //create user chats
+          await updateDoc(doc(db, "userChats", currentUser.uid), {
+            [currentUser.uid + ".userInfo"]: {
+              uid: currentUser.uid,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+          }
+      } catch (err) {}
+  
+      setUser(null);
+      setUsername("")  
+  }
+
   useEffect(() => {
     const getChats = () => {
     const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {

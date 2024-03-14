@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext'
-import { collection } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore'
 import { db } from "../firebase";
 
 
@@ -9,11 +9,31 @@ function Message({message}) {
   const {currentUser} = useContext(AuthContext)
   const {data} = useContext(ChatContext)
   const date = new Date()
+  const [msgSender, setMsgSender] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        const usersData = querySnapshot.docs.map(doc => doc.data());
+        console.log(usersData);
+        const sender = usersData.filter(user => user.uid === message.senderId)
+        console.log(sender[0].uid)
+        setMsgSender(sender[0]);
+      } catch (error) {
+        console.error("Error fetching users: ", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+
+
   
 const ref = useRef();
 console.log(message.date)
 
-const msgSender = collection(db, message.senderId);
 console.log(msgSender)
 // const senderImg = 
 
