@@ -47,22 +47,37 @@ function Messages() {
     dispatch({type:"CHANGE_USER", payload: u})
   }
 
-  console.log(Object.entries(chats))
+  console.log(chats)
   
-  
-  return (
-    <div className="chats">
-    {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).filter(chat => chat[1].userInfo.displayName !== currentUser.displayName).map(chat => (
-    <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
-      <img src={chat[1].userInfo.photoURL} alt="" className="userChat" />
-      <div className="userChatInfo">
-        <span>{chat[1].userInfo.displayName}</span>
-        <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
+  if(chats === undefined) {
+    return ( 
+    <>
+      <div>
+          You currently have no messages. Create a new message by searching for a user above.  
+      </div>   
+    </> 
+    )
+  } else if (Object.entries(chats).length === 0) {
+    return ( <>
+            <div>
+          You currently have no messages. Create a new message by searching for a user above.  
+        </div>   
+</> )
+  } else {
+    return (
+      <div className="chats">
+      {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).filter(chat => chat[1].userInfo.displayName !== currentUser.displayName).map(chat => (
+      <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
+        <img src={chat[1].userInfo.photoURL} alt="" className="userChat" />
+        <div className="userChatInfo">
+          <span>{chat[1].userInfo.displayName}</span>
+          <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
+        </div>
       </div>
-    </div>
-  ))}
-</div>
-  )
+    ))}
+  </div>
+    )
+  }
 }
 
 function Groups() {
@@ -89,36 +104,59 @@ function Groups() {
     dispatch({type:"CHANGE_USER", payload: u})
   }
 
-  console.log(Object.entries(chats))
-  const test = Object.entries(chats)[1]
-  console.log(test)
-// Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
-// console.log(Object.entries(chats)[1])))
+
+  if(chats != undefined) {
+    console.log(Object.entries(chats))
+    const test = Object.entries(chats)
+    const test2 = test[1]
+    console.log(test2)
+  // Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
+  // console.log(Object.entries(chats)[1])))
+  console.log(test.length)
+  }
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   
-  return (
-    <>
-      <button onClick={openModal}>New Group</button>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <GroupChatForm onClose={closeModal} />
-      </Modal>    
-      <div className="chats">
-    {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
-    <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
-      <img src={chat[1].userInfo.photoURL} alt="" className="userChat" />
-      <div className="userChatInfo">
-        <span>{chat[1].userInfo.displayName}</span>
-        <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
-      </div>
-    </div>
-    ))}
-    </div>
-    </>
-  )
+
+  // if(chats.length === 0){
+    return(
+      <>
+        <button onClick={openModal}>New Group</button>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <GroupChatForm onClose={closeModal} />
+        </Modal> 
+        <div>
+          You are currently in no group chats. Create a new group above.  
+        </div>   
+      </>
+
+    )
+  // } else {
+  //   return (
+  //     <>
+  //       <button onClick={openModal}>New Group</button>
+  //       <Modal isOpen={isModalOpen} onClose={closeModal}>
+  //         <GroupChatForm onClose={closeModal} />
+  //       </Modal>    
+  //       <div className="chats">
+  //     {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
+  //     <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
+  //       <img src={chat[1].userInfo.photoURL} alt="" className="userChat" />
+  //       <div className="userChatInfo">
+  //         <span>{chat[1].userInfo.displayName}</span>
+  //         <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
+  //       </div>
+  //     </div>
+  //     ))}
+
+  //   </div>
+  //   </>
+  // )
+
+  // }
 }
 
 function Notes() {
@@ -144,9 +182,16 @@ function Notes() {
     dispatch({type:"CHANGE_USER", payload: u})
   }
 
-  console.log(Object.entries(chats))
   
-  
+  if(chats === undefined) {
+    return ( 
+    <>
+      <div>
+          You currently have no notes.  
+      </div>   
+    </> 
+    )
+  } else if (Object.entries(chats).length === 0) {
   return (
     <div className="chats">
   {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).filter(chat => chat[1].userInfo.displayName === currentUser.displayName).map(chat => (
@@ -160,6 +205,7 @@ function Notes() {
   ))}
 </div>
   )
+  }
 }
 
 

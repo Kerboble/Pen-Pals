@@ -7,7 +7,9 @@ import {
     getDoc, 
     serverTimestamp, 
     setDoc, 
-    updateDoc
+    updateDoc,
+    where,
+    query
 } from 'firebase/firestore';
 import { db } from '../firebase'
 import { AuthContext } from '../context/AuthContext';
@@ -65,8 +67,13 @@ export const GroupChatForm = ({ onClose }) => {
     const groupChatId = [currentUser.uid, ...addedUserObjects.map((u) => u.uid)].sort().join('_');
     console.log(groupChatId)
 
-    const allChatUsers = [currentUser];
-    allChatUsers.push(addedUserObjects);
+    const allChatUsers = allUsers.filter(user => user.displayName === currentUser.displayName);
+
+
+    addedUserObjects.forEach(user => {
+      allChatUsers.push(user);
+    })
+
     console.log(allChatUsers);
 
     
@@ -78,21 +85,20 @@ export const GroupChatForm = ({ onClose }) => {
           // create a chat in group chats collection
             await setDoc(doc(db, 'groupChats', groupChatId), {messages: []});
 
-            console.log(addedUserObjects);
-            const updates = addedUserObjects.forEach(user => {
+            const updates = allChatUsers.forEach(user => {
+              console.log(user)
                 const userGroupRef = doc(db, 'userGroups', user.uid);
                 return setDoc(userGroupRef,  {
-                    [`${groupChatId}.groupInfo`]: {
+                    [groupChatId.groupInfo]: {
                         // members: addedUserObjects.map((u) => ({ uid: u.uid, displayName: u.displayName, photoURL: u.photoURL})),
                         groupId: groupChatId,
                         groupName: chatName,
-                        photoURL: groupPhotoURL
+                        photoURL: groupPhotoURL,
+                        users: addedUsers
                     },
-                    [`${groupChatId}.date`]: serverTimestamp(),
+                    [groupChatId.date]: serverTimestamp(),
                 });
             });
-            console.log(updates)
-
             await Promise.all(updates);
             }
         } catch (error) {
@@ -149,7 +155,7 @@ export const GroupChatForm = ({ onClose }) => {
       <div className='user-selection'>
         <div className="all-users">
             <h4>All Users</h4>
-            {allUsers.map(user => (
+            {allUsers.filter(user => user.displayName !== currentUser.displayName).map(user => (
                 <div key={user.uid} 
                 onClick={() => {addUserToChat(user.displayName);
                 addUserObjectToChat(user)}
@@ -160,7 +166,7 @@ export const GroupChatForm = ({ onClose }) => {
 
         <div className="addedUsers">
             <h4>Added Users</h4>
-            {addedUsers.map(user =>
+            {addedUsers.filter(user => user.displayName !== currentUser.displayName).map(user =>
                 <div key={user} onClick={() => {removeUserFromChat(user);
                 removeUserObjectFromChat(user)}
                 }>{user}</div>)}

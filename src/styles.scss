@@ -614,3 +614,9 @@ label {
   background: none;
   font-size: large;
 }
+
+.user-selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
