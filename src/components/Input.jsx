@@ -11,7 +11,7 @@ import {
 import { db, storage } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import Attach from "../assets/paper-clip.png"
+import Attach from "../assets/paper-clip.png";
 
 function Input() {
   const [text, setText] = useState("");
@@ -36,7 +36,7 @@ function Input() {
             }),
           });
         });
-      })              
+      });
     } else {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
@@ -49,44 +49,66 @@ function Input() {
     }
 
     await updateDoc(doc(db, "userChats", currentUser.uid), {
-      [data.chatId + ".lastMessage"] : {
-        text
+      [data.chatId + ".lastMessage"]: {
+        text,
       },
-      [data.chatId+".date"]: serverTimestamp(),
+      [data.chatId + ".date"]: serverTimestamp(),
     });
     await updateDoc(doc(db, "userChats", data.user.uid), {
-      [data.chatId + ".lastMessage"] : {
-        text
+      [data.chatId + ".lastMessage"]: {
+        text,
       },
-      [data.chatId+".date"]: serverTimestamp(),
+      [data.chatId + ".date"]: serverTimestamp(),
     });
 
-    setText('');
+    setText("");
     setImg(null);
-  }
+  };
+
+  const handleFile = (e) => {
+    const img = e.target.files[0];
+    setImg(img);
+  };
+
+  const deleteSendingPhoto = () => {
+    setImg(null);
+  };
 
   return (
     <div className="chat-input">
-    <input
-      type="text"
-      placeholder="Type something..."
-      onChange={(e) => setText(e.target.value)}
-      value={text}
-    />
-    <div className="send">
+      {img ? (
+        <div className="sending-photo-container">
+          <img
+            src={URL.createObjectURL(img)}
+            alt=""
+            className="sending-image"
+          />
+          <button onClick={deleteSendingPhoto} className="delete-sending-photo">
+            x
+          </button>
+        </div>
+      ) : null}
       <input
-        type="file"
-        style={{ display: "none" }}
-        id="file"
-        onChange={(e) => setImg(e.target.files[0])}
+        type="text"
+        placeholder="type a message...."
+        onChange={(e) => setText(e.target.value)}
+        value={text}
       />
-      <label htmlFor="file">
-        <img src={Attach} alt="" />
-      </label>
-      <button onClick={handleSend}>Send</button>
+      <div className="send">
+        <input
+          type="file"
+          style={{ display: "none" }}
+          id="file"
+          onChange={handleFile}
+          placeholder="hello"
+        />
+        <label htmlFor="file">
+          <img src={Attach} alt="" />
+        </label>
+        <button onClick={handleSend}>Send</button>
+      </div>
     </div>
-  </div>
-  )
+  );
 }
 
-export default Input
+export default Input;
