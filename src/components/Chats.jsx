@@ -4,22 +4,45 @@ import { db } from '../firebase'
 import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext'
 import { Modal, GroupChatForm } from './groupChatForm'
+import EmailVerification from './UpdateEmail'
+import Settings from './Settings'
+import group from '../assets/groups.svg'
+import notes from '../assets/notesIcon.svg'
+import settingsIcon from '../assets/settingsIcon.svg'
+import messageIcon from '../assets/messageIcon.svg'
+import SettingsModal from './SettingsModal'
 
 
 function Chats() {
-  const [activeTab, setActiveTab] = useState('personal');
+  const [activeTab, setActiveTab] = useState('settings');
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const { currentUser } = useContext(AuthContext);
+
+  const openSettingsModal = () => setIsSettingsModalOpen(true);
+  const closeSettingsModal = () => setIsSettingsModalOpen(false);
+
   return(
-    <div>
-      <div>
-        <button onClick={() => setActiveTab('personal')}>Messages</button>
-        <button onClick={() => setActiveTab('group')}>Groups</button>
-        <button onClick={() => setActiveTab('notes')}>Notes</button>
+    <div className='sidebar'>
+      <div className='navbar-icons'>
+        <button className='navIcon' onClick={() => setActiveTab('personal')}>
+          <img className='navIcon' src={messageIcon}></img>
+        </button>
+        <button className='navIcon' onClick={() => setActiveTab('group')}>
+          <img className='navIcon' src={group}></img>
+        </button>
+        <button className='navIcon' onClick={() => setActiveTab('notes')}>
+          <img className='navIcon' src={notes}></img>
+        </button>
+        <button className='navIcon' onClick={openSettingsModal}>
+          <img className='navIcon' src={settingsIcon}></img>
+        </button>
       </div>
       <div>
         {activeTab === 'personal' && <Messages />}
         {activeTab === 'group' && <Groups />}
         {activeTab === 'notes' && <Notes />}
       </div>
+      {isSettingsModalOpen && <SettingsModal onClose={closeSettingsModal} />}
     </div>
   )
 }
@@ -101,7 +124,7 @@ console.log(chat[1].userInfo)))
   return (
     <>
       <button onClick={openModal}>New Group</button>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal className="groupModal"isOpen={isModalOpen} onClose={closeModal}>
         <GroupChatForm onClose={closeModal} />
       </Modal>    
       <div className="chats">
@@ -157,6 +180,37 @@ function Notes() {
     </div>
   ))}
 </div>
+  )
+}
+function UserSettings() {
+  const [chats, setChats] = useState([])
+  const {currentUser} = useContext(AuthContext);
+  const { dispatch } =  useContext(ChatContext)
+
+
+  useEffect(() => {
+    const getChats = () => {
+    const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+      setChats(doc.data());
+    });
+
+    return () => {
+      unsub()
+    };
+  };
+    currentUser.uid && getChats();
+  },[currentUser.uid])
+
+  const handleSelect = (u) => {
+    dispatch({type:"CHANGE_USER", payload: u})
+  }
+
+  console.log(Object.entries(chats))
+  
+  return (
+    <div>
+      <Settings />
+    </div>
   )
 }
 

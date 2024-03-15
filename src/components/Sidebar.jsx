@@ -5,10 +5,12 @@ import Chats from './Chats'
 
 function Sidebar() {
   return (
-    <div className="sidebar">
+    <div className='sidebar-container'>
       <Navbar />
+    <div className="sidebar">
       <Search />
       <Chats />
+    </div>
     </div>
   )
 }
@@ -18,8 +20,11 @@ export default Sidebar
 
 function NewSidebar() {
   return (
+    <div>
+    <Navbar />
     <div className="sidebar">
       <Chats />   {/* This will refer to both individual messages and group messages */}
+    </div>
     </div>
   )
 }

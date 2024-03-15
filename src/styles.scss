@@ -63,6 +63,10 @@ body {
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    h2 {
+      color: white;
+    }
 }
 
 .input-form {
@@ -104,8 +108,31 @@ form {
     transition: all .14s ease-out;
     white-space: nowrap;
     width: 100px;
-    margin-left: 170px;
     margin-top: 20px;
+  }
+  .update-button {
+    outline: 0;
+    grid-gap: 8px;
+    align-items: center;
+    background: 0 0;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0;
+    font-size: 16px;
+    gap: 8px;
+    justify-content: center;
+    line-height: 1.5;
+    overflow: hidden;
+    padding: 12px 20px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: all .14s ease-out;
+    white-space: nowrap;
+    width: 150px;
+    margin-top: 50px;
+    color: white;
   }
 
   .signup-button:hover, .error-link:hover {
@@ -161,7 +188,9 @@ label {
     align-items: center;
     gap: 10px;
     font-size: 12px;
-    color:#AFB4AD
+    color:#AFB4AD;
+    cursor: pointer;
+    margin-top: 2rem;
 }
 
 .add-picture {
@@ -187,15 +216,24 @@ label {
     @include tablet{
       width: 90%;;
     }
+    .sidebar-container{
+      background-color: #464b37;
+      position: relative;
+    }
     
     .sidebar {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       border-right: 1px solid #262b15;
       background-color: #464b37;
       position: relative;
 
+
       .search, .chats {
         border-bottom: 1px solid  #464b37;
+
 
         .searchForm {
 
@@ -238,71 +276,124 @@ label {
           }
         }
       }
+    }
+    .navbar{
+      display: flex;
+      background-color: #262b15;
+      align-items: center;
+      height: 50px;
+      padding: 10px;
+      justify-content: space-between;
+      color: #848871;
 
-      .navbar{
+
+      .nav-logo {
+        font-weight: bold;
+        @include tablet{
+          display: none;
+        }
+      }
+
+      .user {
         display: flex;
-        background-color: #262b15;
         align-items: center;
-        height: 50px;
-        padding: 10px;
-        justify-content: space-between;
-        color: #848871;
+        gap: 10px;
 
-
-        .nav-logo {
-          font-weight: bold;
-          @include tablet{
-            display: none;
-          }
+        img {
+          height: 24px;
+          width: 24px;
+          border-radius: 50%;
+          object-fit: cover;
         }
 
-        .user {
-          display: flex;
+        button {
+          outline: 0;
+          grid-gap: 8px;
           align-items: center;
-          gap: 10px;
-
-          img {
-            height: 24px;
-            width: 24px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
-
-          button {
-            outline: 0;
-            grid-gap: 8px;
-            align-items: center;
-            background: 0 0;
-            border: 1px solid #848871;
-            border-radius: 4px;
-            cursor: pointer;
-            display: inline-flex;
-            flex-shrink: 0;
-            font-size: 14px;
-            gap: 8px;
-            justify-content: center;
-            line-height: 1.5;
-            overflow: hidden;
-            padding: 6px 8px;
-            text-decoration: none;
-            text-overflow: ellipsis;
-            transition: all .14s ease-out;
-            white-space: nowrap;
-            width: 100px;
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background-color: #262b15;
-            color: white;
-            &:hover{
-              box-shadow: 4px 4px 0 #AFB4AD;
-              transform: translate(-4px,-4px);
-            }
+          background: 0 0;
+          border: 1px solid #848871;
+          border-radius: 4px;
+          cursor: pointer;
+          display: inline-flex;
+          flex-shrink: 0;
+          font-size: 14px;
+          gap: 8px;
+          justify-content: center;
+          line-height: 1.5;
+          overflow: hidden;
+          padding: 6px 8px;
+          text-decoration: none;
+          text-overflow: ellipsis;
+          transition: all .14s ease-out;
+          white-space: nowrap;
+          width: 100px;
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          background-color: #262b15;
+          color: white;
+          &:hover{
+            box-shadow: 4px 4px 0 #AFB4AD;
+            transform: translate(-4px,-4px);
           }
         }
       }
     }
+    .navbar-icons{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 12rem;
 
+    }
+    .navIcon{
+      width: 4rem;
+      background-color: #464b37;
+      border: none;
+      margin-bottom: 1.5rem;
+      margin-top: .5rem;
+    }
+    .navIcon:hover {
+      width: 5rem;
+      cursor: pointer;
+    }
+    .settingsModal {
+      display: block;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+           
+     .settings-modal-content {
+      background-color: #464b37;
+      margin: 15% auto;
+      padding: 20px;
+      border: none;
+      width: 80%;
+      border-radius: 15px;
+     }
+     .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+     }
+     
+     .close:hover,
+     .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+     }
+
+     }
+     
+     
     .chat {
       flex: 2;
       background-color: white; 
@@ -599,13 +690,19 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 15px;
+  border: none;
+}
+.modal-content {
+  border-radius: 15px;
+  border: none;
 }
 
 .modal {
-  background: white;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 2px 10px gray;
 }
 
 .close-button {
@@ -613,4 +710,20 @@ label {
   border: none;
   background: none;
   font-size: large;
+}
+
+.settings-button-container {
+  .settings-button {
+    margin: .5rem;
+    border-radius: 10px;
+    height: 40px;
+    width: 150px;
+    background-color: #848871;
+    border: none;
+    cursor: pointer;
+  }
+  .settings-button:hover {
+    height: 60px;
+    width: 170px;
+  }
 }
