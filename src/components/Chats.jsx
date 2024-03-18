@@ -3,7 +3,7 @@ import { onSnapshot, doc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext'
-import { Modal, GroupChatForm } from './groupChatForm'
+import { Modal, GroupChatForm, NewNotesForm } from './groupChatForm'
 
 
 function Chats() {
@@ -27,7 +27,7 @@ function Chats() {
 function Messages() {
   const [chats, setChats] = useState([])
   const {currentUser} = useContext(AuthContext);
-  const { dispatch } =  useContext(ChatContext)
+  const { dispatch } =  useContext(ChatContext);
 
 
   useEffect(() => {
@@ -58,15 +58,18 @@ function Messages() {
     </> 
     )
   } else if (Object.entries(chats).length === 0) {
-    return ( <>
-            <div>
-          You currently have no messages. Create a new message by searching for a user above.  
-        </div>   
-</> )
+    return ( 
+    <>
+      <div>
+        You currently have no messages. Create a new message by searching for a user above.  
+      </div>   
+    </>
+    )
   } else {
+    console.log(chats)
     return (
       <div className="chats">
-      {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).filter(chat => chat[1].userInfo.displayName !== currentUser.displayName).map(chat => (
+      {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
       <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
         <img src={chat[1].userInfo.photoURL} alt="" className="userChat" />
         <div className="userChatInfo">
@@ -127,8 +130,12 @@ function Groups() {
   if(chats === undefined) {
     return ( 
     <>
+        <button onClick={openModal}>New Group</button>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <GroupChatForm onClose={closeModal} />
+        </Modal> 
       <div>
-          You currently have no messages. Create a new message by searching for a user above.  
+      You are currently in no group chats. Create a new group above.  
       </div>   
     </> 
     )
@@ -176,35 +183,11 @@ function Notes() {
   const { dispatch } =  useContext(ChatContext)
 
 
-  const createNote = async () => {
-      //check whether the group(chats in firestore) exists, if not create
-      try {
-        const res = await getDoc(doc(db, "chats", currentUser.uid));
-  
-        if (!res.exists()) {
-          //create a chat in chats collection
-          await setDoc(doc(db, "chats", currentUser.uid), { messages: [] });
-  
-          //create user chats
-          await updateDoc(doc(db, "userChats", currentUser.uid), {
-            [currentUser.uid + ".userInfo"]: {
-              uid: currentUser.uid,
-              displayName: currentUser.displayName,
-              photoURL: currentUser.photoURL,
-            },
-            [combinedId + ".date"]: serverTimestamp(),
-          });
-          }
-      } catch (err) {}
-  
-      setUser(null);
-      setUsername("")  
-  }
-
   useEffect(() => {
     const getChats = () => {
-    const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+    const unsub = onSnapshot(doc(db, "userNotes", currentUser.uid), (doc) => {
       setChats(doc.data());
+      console.log(doc.data())
     });
 
     return () => {
@@ -215,31 +198,59 @@ function Notes() {
   },[currentUser.uid])
 
   const handleSelect = (u) => {
-    dispatch({type:"CHANGE_USER", payload: u})
+    dispatch({type:"CHANGE_NOTE", payload: u})
   }
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   
   if(chats === undefined) {
     return ( 
     <>
+        <button onClick={openModal}>New Note</button>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <NewNotesForm onClose={closeModal} />
+        </Modal>    
       <div>
           You currently have no notes.  
       </div>   
     </> 
     )
+  } else if (Object.entries(chats).length === 0) {
+    return(
+      <>
+        <button onClick={openModal}>New Note</button>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <NewNotesForm onClose={closeModal} />
+        </Modal> 
+        <div>
+          You currently have no notes.  
+        </div>   
+      </>
+
+    )
   } else {
   return (
-    <div className="chats">
-  {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).filter(chat => chat[1].userInfo.displayName === currentUser.displayName).map(chat => (
-    <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
-      <img src={chat[1].userInfo.photoURL} alt="" className="userChat" />
-      <div className="userChatInfo">
-        <span>{chat[1].userInfo.displayName}</span>
-        <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
+    <>
+      <button onClick={openModal}>New Note</button>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <NewNotesForm onClose={closeModal} />
+      </Modal> 
+      <div className="chats">
+        {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
+        <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].noteInfo)}>
+          <img src={chat[1].noteInfo.photoURL} alt="" className="userChat" />
+          <div className="userChatInfo">
+            <span>{chat[1].noteInfo.noteName}</span>
+            <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
+          </div>
+        </div>
+        ))}
       </div>
-    </div>
-  ))}
-</div>
+    </>
   )
   }
 }

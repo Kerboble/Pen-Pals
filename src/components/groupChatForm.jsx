@@ -29,6 +29,55 @@ export const Modal = ({ isOpen, onClose, children }) => {
   );
 };
 
+export const NewNotesForm = ({ onClose }) => {
+  const [noteName, setNoteName] = useState('');
+  const { currentUser } = useContext(AuthContext);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (noteName === '') {
+      alert('Please enter a note name.');
+      return;
+    }
+
+    try {
+        const res = await getDoc(doc(db, 'notes', currentUser.uid + noteName));
+        console.log(res.data)
+        if (!res.exists()) {
+          // create a chat in group chats collection
+            await setDoc(doc(db, 'notes', currentUser.uid + noteName), {messages: []});
+
+              updateDoc(doc(db, 'userNotes', currentUser.uid),  {
+                [currentUser.uid + noteName + '.noteInfo']: {
+                  noteId: currentUser.uid + noteName,
+                  noteName: noteName,
+                  photoURL: currentUser.photoURL
+                },
+                [currentUser.uid + noteName + '.date']: serverTimestamp(),
+              });
+            }
+        } catch (error) {
+      console.error("Error creating group chat: ", error);
+    }
+    onClose();
+  };
+
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Note Name:
+        <input
+          type="text"
+          value={noteName}
+          onChange={(e) => setNoteName(e.target.value)}
+        />
+      </label>
+      <button type="submit">Create Note</button>
+    </form>
+  );
+
+}
 
 
 export const GroupChatForm = ({ onClose }) => {
@@ -40,6 +89,7 @@ export const GroupChatForm = ({ onClose }) => {
   const[fileName, setFileName] = useState(null)
   const { currentUser } = useContext(AuthContext);
 
+  console.log(currentUser)
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -60,7 +110,12 @@ export const GroupChatForm = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (chatName === '') {
-      alert('Please enter a chat name.');
+      alert('Please enter a group name.');
+      return;
+    }
+
+    if (fileName === null) {
+      alert('Please enter a group photo')
       return;
     }
 
@@ -116,7 +171,9 @@ export const GroupChatForm = ({ onClose }) => {
         } catch (error) {
       console.error("Error creating group chat: ", error);
     }
+    onClose();
   };
+  
   const addUserToChat = (user) => {
     if (!addedUsers.includes(user)) {
         setAddedUsers([...addedUsers, user]);
@@ -171,7 +228,10 @@ export const GroupChatForm = ({ onClose }) => {
                 <div key={user.uid} 
                 onClick={() => {addUserToChat(user.displayName);
                 addUserObjectToChat(user)}
-                }>{user.displayName}</div>
+                } className='group-form-user'>
+                  <img src={user.photoURL} alt="" className="userChatSmall" />
+                  {user.displayName}
+                  </div>
             ))}
         </div>
 

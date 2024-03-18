@@ -3,14 +3,14 @@ import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from "../firebase";
+import { Modal, EditMessage } from './editMessage';
 
 
-function Message({message}) {
+function Message({message, messages}) {
   const {currentUser} = useContext(AuthContext)
   const {data} = useContext(ChatContext)
   const date = new Date()
   const [msgSender, setMsgSender] = useState([]);
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -28,8 +28,11 @@ function Message({message}) {
     fetchUsers();
   }, []);
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  
   
 const ref = useRef();
 console.log(message.date)
@@ -41,30 +44,6 @@ useEffect(() => {
   ref.current?.scrollIntoView({behavior: "smooth"});
 }, [message])
 
-
-  if(!data.isGroupChat) {
-    return (
-      <div ref={ref}
-        className={`message ${message.senderId === currentUser.uid && "owner"}`}
-      >
-        <div className="messageInfo">
-          <img
-            src={
-              message.senderId === currentUser.uid
-                ? currentUser.photoURL
-                : data.user.photoURL
-            }
-            alt=""
-          />
-          <span>{message.date.toDate().toLocaleTimeString()}</span>
-        </div>
-        <div className="messageContent">
-          {message.text !== "" ? <p>{message.text}</p> : null}
-          {message.img && <img src={message.img} alt="" />}
-        </div>
-      </div>
-    )
-  } else {
 
     return (
       <div ref={ref}
@@ -81,9 +60,12 @@ useEffect(() => {
         {message.text !== "" ? <p>{message.text}</p> : null}
         {message.img && <img src={message.img} alt="" />}
       </div>
+      <button onClick={openModal} className="delete-message">Edit</button>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <EditMessage onClose={closeModal} msg={message} msgs={messages}/>
+        </Modal> 
     </div>
     )
-  }
 }
 
 export default Message

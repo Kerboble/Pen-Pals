@@ -416,8 +416,16 @@ label {
 
           }
 
+          .delete-message {
+            display: none;
+          }
+
           &.owner{
             flex-direction: row-reverse;
+            
+            .delete-message{
+              display: flex;
+            }
 
             .messageContent {
               align-items: flex-end;
@@ -615,8 +623,49 @@ label {
   font-size: large;
 }
 
+.delete-message {
+  float: right;
+  border: none;
+  background: none;
+  font-size: large;
+}
+
 .user-selection {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
+.userChatSmall{
+  padding: 10px;
+  gap: 10px;
+  display: flex;
+  color: #262b15;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  flex-direction: row;
+
+
+  &:hover{
+    background-color: #3d4131;
+    transition: 0.2s;
+  }
+
+  img{
+    width: 1px;
+    height: 1px;
+    border-radius: 50%;
+    object-fit: cover;
+    }
+
+    .userChatInfo{
+      span{font-size: 18px; font-weight: bolder;}
+      p{font-style: 14px; color: #848871;}
+    }
+  }
+
+  .group-form-user{
+    display: flex;
+    flex-direction: row;
+  }

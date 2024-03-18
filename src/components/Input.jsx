@@ -1,9 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import {
   arrayUnion,
+  collection,
   doc,
+  onSnapshot,
   serverTimestamp,
   Timestamp,
   updateDoc,
@@ -16,10 +18,25 @@ import Attach from "../assets/paper-clip.png"
 function Input() {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
-  
-
+  const [messages, setMessages] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+  const [collectionName, setCollectionName] = useState('chats');
+
+  useEffect(() => {
+    if (data.chatType === 'group') {
+        setCollectionName('groupChats');
+    } else if (data.chatType === 'chat') {
+        setCollectionName('chats');
+    } else if (data.chatType === 'note') {
+        setCollectionName('notes');
+    } else {
+        // Handle unexpected chatType
+        console.error('Unknown chatType:', data.chatType);
+    }
+    console.log(collectionName)
+  }, [data.chatType]);
+
 
   const handleSend = async () => {
     const messageData = {
@@ -48,31 +65,68 @@ function Input() {
     }
   };
 
+  useEffect(() => {
+    let unSub;
+
+    if (data && data.chatId) {
+        unSub = onSnapshot(doc(db, collectionName, data.chatId), (doc) => {
+            doc.exists() && setMessages(doc.data().messages);
+        });
+    }
+
+    return () => {
+      // Clean up the subscription
+      if (unSub) unSub();
+    };
+}, [data, collectionName]); // Include collectionName in the dependency array
+
+  //   const unSub = onSnapshot(doc(db, collectionName, data.chatId), (doc) => {
+  //     doc.exists() && setMessages(doc.data().messages);
+  //   });
+
+  //   return () => {
+  //     unSub();
+  //   };
+  // }, [collectionName]);
+
+
   const sendMessage = async (messageData) => {
-    const chatCollection = data.isGroupChat ? 'groupChats' : 'chats';
-    await updateDoc(doc(db, chatCollection, data.chatId), {
-      messages: arrayUnion(messageData),
+    const newMessagesArray = [messageData, ...messages]
+    await updateDoc(doc(db, collectionName, data.chatId), {
+      // messages: arrayUnion(messageData),
+      messages: newMessagesArray,
     });
 
-    if(!data.isGroupChat) {
+    if(collectionName === 'chats'){
+      console.log('chats searching');
       await updateDoc(doc(db, "userChats", currentUser.uid), {
         [data.chatId + ".lastMessage"] : { text },
-        [data.chatId+".date"]: serverTimestamp(),
+        [data.chatId + ".date"]: serverTimestamp(),
       });
       await updateDoc(doc(db, "userChats", data.user.uid), {
         [data.chatId + ".lastMessage"] : { text },
-        [data.chatId+".date"]: serverTimestamp(),
+        [data.chatId + ".date"]: serverTimestamp(),
       });
-    } else {
+      console.log('chats updated');
+    } else if(collectionName === 'groupChats'){
       const users = data.groupInfo.users;
 
       console.log(users);
+      console.log('groups searching');
       users.forEach((user) => 
       updateDoc(doc(db, "userGroups", user), {
         [data.chatId + ".lastMessage"] : { text },
-        [data.chatId+".date"]: serverTimestamp(),
+        [data.chatId + ".date"]: serverTimestamp(),
       })
       );
+      console.log('groups updated');
+    }else if(collectionName === 'notes'){
+      console.log('notes searching');
+      await updateDoc(doc(db, 'userNotes', currentUser.uid), {
+        [data.chatId + '.lastMessage'] : {text},
+        [data.chatId + '.date'] : serverTimestamp(),
+      })
+      console.log('notes updated');
     }
 
     setText('');
@@ -104,6 +158,12 @@ function Input() {
       placeholder="type a message...."
       onChange={(e) => setText(e.target.value)}
       value={text}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault(); // Prevents the default action of the enter key
+          handleSend();
+        }    
+      }}
     />
     <div className="send">
       <input
