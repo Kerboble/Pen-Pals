@@ -9,21 +9,35 @@ const Messages = () => {
   const { data } = useContext(ChatContext);
 
   useEffect(() => {
-    const unSub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
+    let collectionName = 'chat';
+
+    if (data.chatType === 'group') {
+        collectionName = 'groupChats';
+    } else if (data.chatType === 'chat') {
+        collectionName = 'chats';
+    } else if (data.chatType === 'note') {
+        collectionName = 'notes';
+    } else {
+        // Handle unexpected chatType
+        console.error('Unknown chatType:', data.chatType);
+    }
+
+    const unSub = onSnapshot(doc(db, collectionName, data.chatId), (doc) => {
       doc.exists() && setMessages(doc.data().messages);
+      console.log(messages)
     });
 
     return () => {
       unSub();
     };
-  }, [data.chatId]);
+  }, [data.chatId, data.chatType]);
 
   console.log(messages)
 
   return (
     <div className="messages">
-      {messages.map((m) => (
-        <Message message={m} key={m.id} />
+      {[...messages].reverse().map((m) => (
+        <Message messages={messages} message={m} key={m.id} />
       ))}
     </div>
   );
