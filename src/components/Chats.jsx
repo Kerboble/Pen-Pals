@@ -11,9 +11,9 @@ function Chats() {
   return(
     <div>
       <div>
-        <button onClick={() => setActiveTab('personal')}>Messages</button>
-        <button onClick={() => setActiveTab('group')}>Groups</button>
-        <button onClick={() => setActiveTab('notes')}>Notes</button>
+        <button class='messages-button' onClick={() => setActiveTab('personal')}>Messages</button>
+        <button class='group-button' onClick={() => setActiveTab('group')}>Groups</button>
+        <button class='notes-button' onClick={() => setActiveTab('notes')}>Notes</button>
       </div>
       <div>
         {activeTab === 'personal' && <Messages />}
@@ -100,7 +100,7 @@ console.log(chat[1].userInfo)))
   
   return (
     <>
-      <button onClick={openModal}>New Group</button>
+      <button class='newgroup-button' onClick={openModal}>New Group</button>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <GroupChatForm onClose={closeModal} />
       </Modal>    

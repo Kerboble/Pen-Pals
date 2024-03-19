@@ -58,6 +58,8 @@ body {
     padding: 20px;
     margin-right: 20px;
     margin-left: 20px;
+    width: 100vw; // add
+    align-items: center; // add
 }
 
 form {
@@ -180,7 +182,9 @@ label {
 .home-container {
     border: 1px solid #262b15;
     border-radius: 10px;
-    width: 65%;
+    // width: 65%;
+    // height: 85%;
+    width: 100%;
     height: 85%;
     display: flex;
     overflow: hidden;
@@ -395,7 +399,8 @@ label {
           }
 
           .messageContent{
-            max-width: 80%;
+            // max-width: 80%; // remove
+            max-width: 70%; // add
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -427,8 +432,12 @@ label {
                 padding: 10px 20px;
                 border-radius: 10px 10px 0px 10px;
                 color: white;
-                max-width: 50%;
+                // max-width: 50%; // remove
+                max-width: 70%; // add
                 overflow-wrap: break-word;
+              }
+              img {
+                max-width: 50%; // add
               }
             }
           }
@@ -442,6 +451,7 @@ label {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        line-break: loose; // add
         .send {
           display: flex;
           gap: 10px;
@@ -613,4 +623,19 @@ label {
   border: none;
   background: none;
   font-size: large;
+}
+.messages-button, .group-button, .notes-button, .newgroup-button {
+  background-color:#262b15;
+  color: white;
+  background: 0 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;  
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  padding: 5px 7px;
+  width: 100px;
+  margin-left: 15px;
+  margin-bottom: 15px;
 }
