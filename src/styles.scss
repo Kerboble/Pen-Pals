@@ -70,8 +70,10 @@ form {
 .input-form {
     padding: 70px 90px 0px;
     border: none;
-    border-bottom: 2px solid white;
-    background-color: transparent;
+    // border-bottom: 2px solid white;// remove
+    border-bottom: 2px solid #464b37;  // add
+    // background-color: transparent; // remove
+    background-color: #464b37 !important; // add
     font-size: 20px;
     color: #AFB4AD;
     text-align: center;
@@ -85,6 +87,7 @@ form {
     } 
   }
   
+
   .signup-button {
     outline: 0;
     grid-gap: 8px;
