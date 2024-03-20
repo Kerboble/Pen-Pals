@@ -3,16 +3,16 @@ import { onSnapshot, doc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext'
-import { Modal, GroupChatForm } from './groupChatForm'
-import EmailVerification from './UpdateEmail'
+import { Modal, GroupChatForm, NewNotesForm } from './groupChatForm'
+import UpdateEmail from './UpdateEmail'
 import Settings from './Settings'
 import group from '../assets/groups.svg'
 import notes from '../assets/notesIcon.svg'
 import settingsIcon from '../assets/settingsIcon.svg'
 import messageIcon from '../assets/messageIcon.svg'
 import SettingsModal from './SettingsModal'
-import { NewNotesForm } from './groupChatForm'
-
+import Navbar from './Navbar.jsx'
+import currentTab from './Navbar.jsx'
 
 function Chats() {
   const [activeTab, setActiveTab] = useState('settings');
@@ -24,7 +24,8 @@ function Chats() {
 
   return(
     <div className='sidebar'>
-      <div className='navbar-icons'>
+      {/* <Navbar /> */}
+      {/* <div className='navbar-icons'>
         <button className='navIcon' onClick={() => setActiveTab('personal')}>
           <img className='navIcon' src={messageIcon}></img>
         </button>
@@ -37,13 +38,13 @@ function Chats() {
         <button className='navIcon' onClick={openSettingsModal}>
           <img className='navIcon' src={settingsIcon}></img>
         </button>
-      </div>
+      </div> */}
       <div>
         {activeTab === 'personal' && <Messages />}
         {activeTab === 'group' && <Groups />}
         {activeTab === 'notes' && <Notes />}
       </div>
-      {isSettingsModalOpen && <SettingsModal onClose={closeSettingsModal} />}
+      {/* {isSettingsModalOpen && <SettingsModal onClose={closeSettingsModal} />} */}
     </div>
   )
 }
@@ -95,7 +96,7 @@ function Messages() {
       <div className="chats">
       {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
       <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)}>
-        <img src={chat[1].userInfo.photoURL} alt="" className="userChat" />
+        {/* <img src={chat[1].userInfo.photoURL} alt="" className="userChat" /> */}
         <div className="userChatInfo">
           <span>{chat[1].userInfo.displayName}</span>
           <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
@@ -186,9 +187,9 @@ function Groups() {
         <div className="chats">
       {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
       <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].groupInfo)}>
-        <img src={chat[1].groupInfo.photoURL} alt="" className="userChat" />
+        {/* <img src={chat[1].groupInfo.photoURL} alt="" className="userChat" /> */}
         <div className="userChatInfo">
-          <span>{chat[1].groupInfo.groupName}</span>
+          {/* <span>{chat[1].groupInfo.groupName}</span> */}
           <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
         </div>
       </div>
@@ -266,7 +267,7 @@ function Notes() {
       <div className="chats">
         {Object.entries(chats)?.sort((a, b) => b[1].date - a[1].date).map(chat => (
         <div className="userChat" key={chat[0]} onClick={() => handleSelect(chat[1].noteInfo)}>
-          <img src={chat[1].noteInfo.photoURL} alt="" className="userChat" />
+          {/* <img src={chat[1].noteInfo.photoURL} alt="" className="userChat" /> */}
           <div className="userChatInfo">
             <span>{chat[1].noteInfo.noteName}</span>
             <p>{chat[1].lastMessage?.text.slice(0, 20)}{chat[1].lastMessage?.text.length > 20 ? '...' : ''}</p>
@@ -278,6 +279,7 @@ function Notes() {
   )
   }
 }
+
 function UserSettings() {
   const [chats, setChats] = useState([])
   const {currentUser} = useContext(AuthContext);

@@ -197,7 +197,123 @@ label {
     margin-top: 20px;
 }
 
+.navbar{
+  display: flex;
+  background-color: #262b15;
+  align-items: center;
+  height: 60px;
+  padding: 10px;
+  justify-content: space-between;
+  color: #848871;
 
+
+  .nav-logo {
+    font-weight: bold;
+    @include tablet{
+      display: none;
+    }
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    button {
+      outline: 0;
+      grid-gap: 8px;
+      align-items: center;
+      background: 0 0;
+      border: 1px solid #848871;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      flex-shrink: 0;
+      font-size: 14px;
+      gap: 8px;
+      justify-content: center;
+      line-height: 1.5;
+      overflow: hidden;
+      padding: 6px 8px;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      transition: all .14s ease-out;
+      white-space: nowrap;
+      width: 100px;
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background-color: #262b15;
+      color: white;
+      &:hover{
+        box-shadow: 4px 4px 0 #AFB4AD;
+        transform: translate(-4px,-4px);
+      }
+    }
+  }
+}
+.navbar-icons{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 12rem;
+
+}
+.navIcon{
+  width: 3rem;
+  background-color: #262b15;
+  border: none;
+  margin-right: 4rem;
+  margin-left: 4rem;
+  
+}
+.navIcon:hover {
+  width: 4rem;
+  cursor: pointer;
+
+}
+.settingsModal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+       
+ .settings-modal-content {
+  background-color: #464b37;
+  margin: 15% auto;
+  padding: 20px;
+  border: none;
+  width: 80%;
+  border-radius: 15px;
+ }
+ .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+ }
+ 
+ .close:hover,
+ .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+ }
+
+ }
 
 .home {
     background-color: #848871;
@@ -205,6 +321,8 @@ label {
     display: flex;
     align-items: center;
     justify-content: center;
+    display: flex;
+    flex-direction: column;
 
 .home-container {
     border: 1px solid #262b15;
@@ -212,10 +330,16 @@ label {
     width: 65%;
     height: 85%;
     display: flex;
+    flex-direction: column;
     overflow: hidden;
     @include tablet{
       width: 90%;;
     }
+    .content-container {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1; /* This makes the content container take up the remaining space */
+     }
     .sidebar-container{
       background-color: #464b37;
       position: relative;
@@ -277,123 +401,7 @@ label {
         }
       }
     }
-    .navbar{
-      display: flex;
-      background-color: #262b15;
-      align-items: center;
-      height: 50px;
-      padding: 10px;
-      justify-content: space-between;
-      color: #848871;
-
-
-      .nav-logo {
-        font-weight: bold;
-        @include tablet{
-          display: none;
-        }
-      }
-
-      .user {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        img {
-          height: 24px;
-          width: 24px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-
-        button {
-          outline: 0;
-          grid-gap: 8px;
-          align-items: center;
-          background: 0 0;
-          border: 1px solid #848871;
-          border-radius: 4px;
-          cursor: pointer;
-          display: inline-flex;
-          flex-shrink: 0;
-          font-size: 14px;
-          gap: 8px;
-          justify-content: center;
-          line-height: 1.5;
-          overflow: hidden;
-          padding: 6px 8px;
-          text-decoration: none;
-          text-overflow: ellipsis;
-          transition: all .14s ease-out;
-          white-space: nowrap;
-          width: 100px;
-          position: absolute;
-          bottom: 10px;
-          left: 10px;
-          background-color: #262b15;
-          color: white;
-          &:hover{
-            box-shadow: 4px 4px 0 #AFB4AD;
-            transform: translate(-4px,-4px);
-          }
-        }
-      }
-    }
-    .navbar-icons{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 12rem;
-
-    }
-    .navIcon{
-      width: 4rem;
-      background-color: #464b37;
-      border: none;
-      margin-bottom: 1.5rem;
-      margin-top: .5rem;
-    }
-    .navIcon:hover {
-      width: 5rem;
-      cursor: pointer;
-    }
-    .settingsModal {
-      display: block;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.4);
-           
-     .settings-modal-content {
-      background-color: #464b37;
-      margin: 15% auto;
-      padding: 20px;
-      border: none;
-      width: 80%;
-      border-radius: 15px;
-     }
-     .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-     }
-     
-     .close:hover,
-     .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-     }
-
-     }
-     
-     
+    
     .chat {
       flex: 2;
       background-color: white; 
