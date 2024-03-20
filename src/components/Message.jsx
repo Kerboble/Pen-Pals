@@ -60,7 +60,7 @@ useEffect(() => {
         {message.text !== "" ? <p>{message.text}</p> : null}
         {message.img && <img src={message.img} alt="" />}
       </div>
-      <button onClick={openModal} className="delete-message">Edit</button>
+      <button onClick={openModal} className="delete-message">...</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <EditMessage onClose={closeModal} msg={message} msgs={messages}/>
         </Modal> 
