@@ -402,6 +402,7 @@ label {
           }
 
           .messageContent{
+            // when owner of chat sends
             // max-width: 80%; // remove
             max-width: 70%; // add
             display: flex;
@@ -412,13 +413,15 @@ label {
               background-color: #AFB4AD;
               padding: 10px 20px;
               border-radius: 0px 10px 10px 10px;
-              max-width: 50%;
+              // max-width: 50%; // remove
+              max-width: 70%; // add
               overflow-wrap: break-word;
             }
 
             img{
               width: 50%;
               border-radius: 10px;
+              padding-bottom: 10px; // add
             }
 
 
@@ -455,10 +458,14 @@ label {
         justify-content: space-between;
         align-items: center;
         line-break: loose; // add
+
         .send {
           display: flex;
           gap: 10px;
           align-items: center;
+          cursor: pointer;// add
+          // add
+          
         }
   
         img {
@@ -507,6 +514,7 @@ label {
           color: white;
           border-radius: 4px;
           cursor: pointer;
+
         }
   
         input {
