@@ -58,6 +58,8 @@ body {
     padding: 20px;
     margin-right: 20px;
     margin-left: 20px;
+    width: 100vw;
+    align-items: center; 
 }
 
 form {
@@ -72,8 +74,8 @@ form {
 .input-form {
     padding: 70px 90px 0px;
     border: none;
-    border-bottom: 2px solid white;
-    background-color: transparent;
+    border-bottom: 2px solid #464b37;
+    background-color: #464b37 !important;
     font-size: 20px;
     color: #AFB4AD;
     text-align: center;
@@ -485,8 +487,9 @@ label {
             }
           }
 
+          // when owner of chat sends
           .messageContent{
-            max-width: 80%;
+            max-width: 70%;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -495,13 +498,14 @@ label {
               background-color: #AFB4AD;
               padding: 10px 20px;
               border-radius: 0px 10px 10px 10px;
-              max-width: 50%;
+              max-width: 70%;
               overflow-wrap: break-word;
             }
 
             img{
               width: 50%;
               border-radius: 10px;
+              padding-bottom: 10px;
             }
 
 
@@ -511,6 +515,7 @@ label {
             display: none;
           }
 
+        
           &.owner{
             flex-direction: row-reverse;
             
@@ -521,13 +526,17 @@ label {
             .messageContent {
               align-items: flex-end;
 
+              
               p {
                 background-color: #262b15;
                 padding: 10px 20px;
                 border-radius: 10px 10px 0px 10px;
                 color: white;
-                max-width: 50%;
+                max-width: 70%;
                 overflow-wrap: break-word;
+              }
+              img {
+                max-width: 50%;
               }
             }
           }
@@ -541,10 +550,13 @@ label {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        line-break: loose;
+
         .send {
           display: flex;
           gap: 10px;
           align-items: center;
+          cursor: pointer;
         }
   
         img {
@@ -781,3 +793,65 @@ label {
     display: flex;
     flex-direction: row;
   }
+
+  // edit messages
+  .modal {
+    background-color: #262b15;
+    padding: 35px;
+    label {
+      font-size: 18px;
+    }
+    input {
+      background-color: #afb4ad;
+      font-size: 18px;
+      margin: 15px;
+    }
+    button {
+      background-color: #afb4ad;
+      border: 0;
+      border-radius: 56px;
+      color: #3f3f3f;
+      cursor: pointer;
+      display: inline-block;
+      font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      outline: 0;
+      // padding: 16px 21px;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      transition: all .3s;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    button::before {
+      background-color: initial;
+      background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+      border-radius: 125px;
+      content: "";
+      height: 50%;
+      left: 4%;
+      opacity: .5;
+      position: absolute;
+      top: 0;
+      transition: all .3s;
+      width: 92%;
+    }
+
+    button:hover {
+      box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+      transform: scale(1.05);
+    }
+
+    @media (min-width: 768px) {
+      button{
+        padding: 10px 15px;
+      }
+  }
+  .close-button {
+    padding: 10px;
+  }
+}
