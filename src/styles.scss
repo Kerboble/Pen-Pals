@@ -411,6 +411,7 @@ label {
             img{
               width: 50%;
               border-radius: 10px;
+              gap: 10px;
             }
 
 
@@ -419,8 +420,13 @@ label {
           &.owner{
             flex-direction: row-reverse;
 
+            img{
+              margin-top: 10px;
+            }
+
             .messageContent {
               align-items: flex-end;
+              
 
               p {
                 background-color: #262b15;
