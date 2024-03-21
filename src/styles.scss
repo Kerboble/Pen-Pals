@@ -796,15 +796,6 @@ label {
     }
   }
 
-  .group-form-user{
-    display: flex;
-    flex-direction: row;
-    color: white;
-    overflow: scroll;
-  }
-  .addedUsers {
-    color: white;
-  }
 
   // edit messages
   .modal {
@@ -867,5 +858,16 @@ label {
   }
   .close-button {
     padding: 10px;
+  }
+  .input-form {
+    overflow: scroll;
+  }
+  .group-form-user{
+    display: flex;
+    flex-direction: row;
+    color: white;
+  }
+  .addedUsers, .all-users {
+    color: white;
   }
 }
