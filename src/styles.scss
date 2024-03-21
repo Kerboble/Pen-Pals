@@ -220,6 +220,8 @@ label {
     .sidebar-container{
       background-color: #464b37;
       position: relative;
+      overflow: scroll;
+
     }
     
     .sidebar {
@@ -229,7 +231,7 @@ label {
       align-items: center;
       border-right: 1px solid #262b15;
       background-color: #464b37;
-      position: relative;
+      // position: relative;
 
 
       .search, .chats {
@@ -345,15 +347,18 @@ label {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 12rem;
+      width: 4rem;
 
     }
     .navIcon{
-      width: 4rem;
+      display: flex;
+      flex-direction: column;
+      width: 2rem;
       background-color: #464b37;
       border: none;
-      margin-bottom: 1.5rem;
+      margin-bottom: .3rem;
       margin-top: .5rem;
+      // amy additions
     }
     .navIcon:hover {
       width: 5rem;
@@ -553,8 +558,10 @@ label {
 
         .send {
           display: flex;
-          gap: 10px;
           align-items: center;
+          flex-direction: row;
+          gap: 20px;
+   
           cursor: pointer;
         }
   
@@ -562,6 +569,7 @@ label {
           height: 24px;
           width: 24px;
           cursor: pointer;
+          padding-bottom: 25px;
         }
 
         .sending-photo-container {
@@ -791,12 +799,19 @@ label {
   .group-form-user{
     display: flex;
     flex-direction: row;
+    color: white;
+    overflow: scroll;
+  }
+  .addedUsers {
+    color: white;
   }
 
   // edit messages
   .modal {
     background-color: #262b15;
     padding: 35px;
+    overflow: auto;
+
     label {
       font-size: 18px;
     }
