@@ -22,7 +22,8 @@ const Search = () => {
   const handleSearch = async () => {
     const q = query(
       collection(db, "users"),
-      where("displayName", "==", username)
+      where("displayName", "==", username),
+      where('displayName', '!=', currentUser.displayName)
     );
 
     try {
@@ -45,6 +46,7 @@ const Search = () => {
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
+        console.log(combinedId)
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 

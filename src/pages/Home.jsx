@@ -5,8 +5,9 @@ function Home() {
   return (
     <div className="home">
       <div className="home-container">
-          <Sidebar />
-          <Chat />
+        {/* <Navbar /> */}
+        <Sidebar />
+        <Chat />
       </div>
     </div>
   )
