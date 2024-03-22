@@ -16,9 +16,6 @@
   }
 }
 
-
-
-
 .link-style {
   text-decoration: none;
   color: #262b15;
@@ -42,6 +39,8 @@ body {
     flex-direction: row;
     align-items: center;
     height: 100vh;
+    width: 100vw;
+    align-items: center;
     background-color: #848871;
     @include tablet{
       display: flex;
@@ -170,8 +169,6 @@ form {
     
 }
 
-
-
 .avatar-upload-icon {
     align-items: center;
     cursor: pointer;
@@ -198,8 +195,6 @@ label {
     margin-top: 20px;
 }
 
-
-
 .home {
     background-color: #848871;
     height: 100vh;
@@ -208,7 +203,6 @@ label {
     justify-content: center;
 
 .home-container {
-    border: 1px solid #262b15;
     border-radius: 10px;
     width: 65%;
     height: 85%;
@@ -221,9 +215,9 @@ label {
       background-color: #464b37;
       position: relative;
       overflow: scroll;
-
+      height: 85.26vh;
+      width: 30%;
     }
-    
     .sidebar {
       flex: 1;
       display: flex;
@@ -233,11 +227,17 @@ label {
       background-color: #464b37;
       // position: relative;
 
-
+      .no-message{
+        color: white;
+      }
+      .no-group-chats {
+        color: white;
+      }
+      .no-notes {
+        color: white;
+      }
       .search, .chats {
         border-bottom: 1px solid  #464b37;
-
-
         .searchForm {
 
           input{
@@ -252,7 +252,6 @@ label {
             }
           }
         }
-      
 
       .userChat{
         padding: 10px;
@@ -361,7 +360,7 @@ label {
       // amy additions
     }
     .navIcon:hover {
-      width: 5rem;
+      // width: 2rem;
       cursor: pointer;
     }
     .settingsModal {
@@ -517,6 +516,7 @@ label {
 
           .delete-message {
             display: none;
+            cursor: pointer;
           }
 
         
@@ -726,6 +726,7 @@ label {
 }
 
 .modal {
+  height: 60vh;
   padding: 20px;
   border-radius: 15px;
   border: none;
@@ -801,6 +802,7 @@ label {
   .modal {
     background-color: #262b15;
     padding: 35px;
+    height: 60vh;
     overflow: auto;
 
     label {
@@ -856,18 +858,36 @@ label {
         padding: 10px 15px;
       }
   }
-  .close-button {
-    padding: 10px;
-  }
-  .input-form {
-    overflow: scroll;
-  }
-  .group-form-user{
-    display: flex;
-    flex-direction: row;
-    color: white;
-  }
-  .addedUsers, .all-users {
-    color: white;
-  }
+    .user-selection {
+      height: 60%;
+    }
+    .close-button {
+      padding: 10px;
+    }
+    .input-form {
+      overflow: scroll;
+    }
+    .group-form-user{
+      display: flex;
+      flex-direction: row;
+      color: white;
+    }
+    .addedUsers, .all-users {
+      color: white;
+    }
+}
+.new-group, .new-note {
+  background-color:#262b15;
+  color: white;
+  background: 0 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;  
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  padding: 5px 5px;
+  width: 100px;
+  margin-left: 50px;
+  margin-bottom: 15px;  
 }

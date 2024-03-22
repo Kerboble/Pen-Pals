@@ -76,17 +76,17 @@ function Messages() {
   if(chats === undefined) {
     return ( 
     <>
-      <div>
-          You currently have no messages. Create a new message by searching for a user above.  
-      </div>   
+      <span class="no-message">
+          No messages found.
+      </span>   
     </> 
     )
   } else if (Object.entries(chats).length === 0) {
     return ( 
     <>
-      <div>
-        You currently have no messages. Create a new message by searching for a user above.  
-      </div>   
+      <span class="no-message">
+        No messages found.
+      </span>   
     </>
     )
   } else {
@@ -154,32 +154,32 @@ function Groups() {
   if(chats === undefined) {
     return ( 
     <>
-        <button onClick={openModal}>New Group</button>
+        <button class="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal> 
-      <div>
-      You are currently in no group chats. Create a new group above.  
-      </div>   
+      <span class="no-group-chats">
+        No chats found.
+      </span>   
     </> 
     )
   } else if (Object.entries(chats).length === 0) {
     return(
       <>
-        <button onClick={openModal}>New Group</button>
+        <button class="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal> 
-        <div>
-          You are currently in no group chats. Create a new group above.  
-        </div>   
+        <span class="no-group-chats">
+          No chats found.
+        </span>   
       </>
 
     )
   } else {
     return (
       <>
-        <button onClick={openModal}>New Group</button>
+        <button class="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal>    
@@ -234,32 +234,32 @@ function Notes() {
   if(chats === undefined) {
     return ( 
     <>
-        <button onClick={openModal}>New Note</button>
+        <button class="new-note" onClick={openModal}>New Note</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <NewNotesForm onClose={closeModal} />
         </Modal>    
-      <div>
-          You currently have no notes.  
-      </div>   
+      <span class="no-notes">
+          No notes found. 
+      </span>   
     </> 
     )
   } else if (Object.entries(chats).length === 0) {
     return(
       <>
-        <button onClick={openModal}>New Note</button>
+        <button class="new-note" onClick={openModal}>New Note</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <NewNotesForm onClose={closeModal} />
         </Modal> 
-        <div>
-          You currently have no notes.  
-        </div>   
+        <span class="no-notes">
+          No notes found.  
+        </span>   
       </>
 
     )
   } else {
   return (
     <>
-      <button onClick={openModal}>New Note</button>
+      <button class="new-note" onClick={openModal}>New Note</button>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <NewNotesForm onClose={closeModal} />
       </Modal> 
