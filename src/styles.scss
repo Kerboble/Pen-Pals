@@ -203,12 +203,12 @@ label {
   align-items: center;
   height: 60px;
   padding: 10px;
-  justify-content: space-between;
   color: #848871;
-
 
   .nav-logo {
     font-weight: bold;
+    font-size: 1.5rem;
+    margin-left: .5rem;
     @include tablet{
       display: none;
     }
@@ -262,23 +262,17 @@ label {
 .navbar-icons{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 12rem;
-
+  width: 100vw;
 }
-.navIcon{
-  width: 3rem;
+.navIcon {
+  width: 3.5rem;
+  margin-right: 2rem;
   background-color: #262b15;
   border: none;
-  margin-right: 4rem;
-  margin-left: 4rem;
-  
 }
 .navIcon:hover {
-  width: 4rem;
+  width: 4.5rem;
   cursor: pointer;
-
 }
 .settingsModal {
   display: block;
