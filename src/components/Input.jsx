@@ -133,15 +133,6 @@ function Input() {
     setImg(null);
   };
 
-  const handleFile = (e) => {
-    const img = e.target.files[0];
-    setImg(img);
-  };
-
-  const deleteSendingPhoto = () => {
-    setImg(null);
-  }
-
   const  handleFile = (e) => {
     console.log(e.target.files)
     const img = e.target.files[0]

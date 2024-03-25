@@ -17,17 +17,20 @@ const Login = () => {
     const password = e.target[1].value;
 
     try {
-      setLoading(true);  // Set loading to true when starting login process
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
-    } catch (err) {
-      setErr(true);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000); // 1 second delay after login; you can adjust as needed.
-    }
-   };
+      setLoading(true);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      if (user.emailVerified) {
+        navigate("/");
+      } else {
+        setErr("Your email address has not been verified. Please check your inbox.");
+      }
+   } catch (err) {
+      setErr(err.message);
+   } finally {
+      setLoading(false);
+   }
+  };
    
 
   return (
