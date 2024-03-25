@@ -13,7 +13,7 @@ import {
 import { db, storage } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import Attach from "../assets/paper-clip.png"
+import Attach from "../assets/paper-clip.png";
 
 function Input() {
   const [text, setText] = useState("");
@@ -129,7 +129,16 @@ function Input() {
       console.log('notes updated');
     }
 
-    setText('');
+    setText("");
+    setImg(null);
+  };
+
+  const handleFile = (e) => {
+    const img = e.target.files[0];
+    setImg(img);
+  };
+
+  const deleteSendingPhoto = () => {
     setImg(null);
   }
 
@@ -182,4 +191,4 @@ function Input() {
   )
 }
 
-export default Input
+export default Input;
