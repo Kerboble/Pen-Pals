@@ -32,8 +32,8 @@ const Login = () => {
 
   return (
     <div className="form-container">
-      <img src={loginPhoto} className='login-photo' />
-      <div className="form-wrapper">
+    <img src={loginPhoto} className='login-photo' />
+    <div className="form-wrapper" class="login-setup">
         <span className="logo"><img src={pen} className='pen-logo' />PenPals</span>
         <span className="title">Login</span>
         <form action="" onSubmit={handleSubmit}>
