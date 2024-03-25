@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import loginPhoto from "../assets/login-photo.png"
 import pen from "../assets/pen.png"
 import upload from "../assets/gallery.png"
-import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile} from "firebase/auth";
 import { auth, storage, db } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
@@ -34,6 +34,7 @@ function Register() {
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(res.user);
       const storageRef = ref(storage, displayName);
 
       await uploadBytesResumable(storageRef, file).then(() => {
@@ -52,11 +53,11 @@ function Register() {
           });
 
           await setDoc(doc(db, "userChats", res.user.uid), {});
-          navigate("/")
+          navigate("/Login")
         });
       });
     } catch (err) {
-      setError(true);
+      setError(err.message);
     }
     console.log('worked')
   };

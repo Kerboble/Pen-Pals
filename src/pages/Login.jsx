@@ -13,14 +13,24 @@ const Login = () => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-   
+     
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/")
+       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+       const user = userCredential.user;
+       
+       if (!user.emailVerified) {
+         // Email is not verified
+         setErr('Your email is not verified. Please check your inbox and verify your email.');
+         return;
+       }
+       
+       // Email is verified, proceed with the login
+       navigate("/");
     } catch (err) {
-      setErr(true);
+       setErr(err.message);
     }
-  };
+   };
+   
 
   return (
     <div className="form-container">
