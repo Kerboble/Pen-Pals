@@ -357,7 +357,6 @@ label {
       align-items: center;
       border-right: 1px solid #262b15;
       background-color: #464b37;
-      // position: relative;
 
       .no-message{
         color: white;
@@ -415,6 +414,7 @@ label {
     .chat {
       flex: 2;
       background-color: white; 
+      height: 72.3vh;
 
       .chatInfo {
         display: flex;
