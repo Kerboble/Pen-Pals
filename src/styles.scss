@@ -406,6 +406,8 @@ label {
           .userChatInfo{
             span{font-size: 18px; font-weight: bolder;}
             p{font-style: 14px; color: #848871;}
+            color: white;
+            font-weight: 100;
           }
         }
       }
@@ -572,7 +574,7 @@ label {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        line-break: loose;
+        // line-break: loose;
 
         .send {
           display: flex;
@@ -894,8 +896,23 @@ label {
       color: white;
     }
 }
-.new-group, .new-note {
-  background-color:#262b15;
+.new-note{
+  background-color:#848871 !important;
+  color: white;
+  background: 0 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;  
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  padding: 5px 5px;
+  margin-left: 50px;
+  width: 100px;
+  margin-bottom: 15px;  
+}
+.new-group {
+  background-color:#848871 !important;
   color: white;
   background: 0 0;
   border-radius: 4px;
