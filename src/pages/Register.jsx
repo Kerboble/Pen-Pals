@@ -53,6 +53,8 @@ function Register() {
             });
 
             await setDoc(doc(db, "userChats", res.user.uid), {});
+            await setDoc(doc(db, "userGroups", res.user.uid), {});
+            await setDoc(doc(db, "userNotes", res.user.uid), {});
             navigate("/Login");
           });
       });
