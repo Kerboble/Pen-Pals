@@ -14,7 +14,7 @@ import { signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import { AuthContext } from '../context/AuthContext'
 import { TabContext } from '../context/TabContext'
-
+import '../styles.scss'
 
 
 function Navbar() {

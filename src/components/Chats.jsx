@@ -12,7 +12,7 @@ import settingsIcon from '../assets/settingsIcon.svg'
 import messageIcon from '../assets/messageIcon.svg'
 import SettingsModal from './SettingsModal'
 import { NewNotesForm } from './groupChatForm'
-
+import '../styles.scss'
 
 function Chats() {
   const [activeTab, setActiveTab] = useState('settings');
@@ -154,7 +154,7 @@ function Groups() {
   if(chats === undefined) {
     return ( 
     <>
-        <button class="new-group" onClick={openModal}>New Group</button>
+        <button className="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal> 
@@ -166,7 +166,7 @@ function Groups() {
   } else if (Object.entries(chats).length === 0) {
     return(
       <>
-        <button class="new-group" onClick={openModal}>New Group</button>
+        <button className="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal> 
@@ -179,7 +179,7 @@ function Groups() {
   } else {
     return (
       <>
-        <button class="new-group" onClick={openModal}>New Group</button>
+        <button className="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal>    
@@ -234,7 +234,7 @@ function Notes() {
   if(chats === undefined) {
     return ( 
     <>
-        <button class="new-note" onClick={openModal}>New Note</button>
+        <button className="new-note" onClick={openModal}>New Note</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <NewNotesForm onClose={closeModal} />
         </Modal>    
@@ -246,7 +246,7 @@ function Notes() {
   } else if (Object.entries(chats).length === 0) {
     return(
       <>
-        <button class="new-note" onClick={openModal}>New Note</button>
+        <button className="new-note" onClick={openModal}>New Note</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <NewNotesForm onClose={closeModal} />
         </Modal> 
@@ -258,8 +258,8 @@ function Notes() {
     )
   } else {
   return (
-    <>
-      <button class="new-note" onClick={openModal}>New Note</button>
+    <>        
+      <button className="new-note" onClick={openModal}>New Note</button>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <NewNotesForm onClose={closeModal} />
       </Modal> 

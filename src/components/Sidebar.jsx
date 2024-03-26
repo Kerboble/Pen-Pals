@@ -14,6 +14,7 @@ import messageIcon from '../assets/messageIcon.svg'
 import SettingsModal from './SettingsModal'
 import Navbar from './Navbar.jsx'
 import Search from './Search.jsx'
+import '../styles.scss'
 
 function Sidebar() {
   const { activeTab } = useContext(TabContext);
@@ -141,7 +142,7 @@ function Groups() {
   if(chats === undefined) {
     return ( 
     <>
-        <button onClick={openModal}>New Group</button>
+        <button className="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal> 
@@ -153,7 +154,7 @@ function Groups() {
   } else if (Object.entries(chats).length === 0) {
     return(
       <>
-        <button onClick={openModal}>New Group</button>
+        <button className="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal> 
@@ -166,7 +167,7 @@ function Groups() {
   } else {
     return (
       <>
-        <button onClick={openModal}>New Group</button>
+        <button className="new-group" onClick={openModal}>New Group</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <GroupChatForm onClose={closeModal} />
         </Modal>    
@@ -221,7 +222,7 @@ function Notes() {
   if(chats === undefined) {
     return ( 
     <>
-        <button onClick={openModal}>New Note</button>
+        <button className="new-note" onClick={openModal}>New Note</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <NewNotesForm onClose={closeModal} />
         </Modal>    
@@ -233,7 +234,7 @@ function Notes() {
   } else if (Object.entries(chats).length === 0) {
     return(
       <>
-        <button onClick={openModal}>New Note</button>
+        <button className="new-note" onClick={openModal}>New Note</button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <NewNotesForm onClose={closeModal} />
         </Modal> 
@@ -246,7 +247,7 @@ function Notes() {
   } else {
   return (
     <>
-      <button onClick={openModal}>New Note</button>
+      <button className="new-note" onClick={openModal}>New Note</button>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <NewNotesForm onClose={closeModal} />
       </Modal> 
